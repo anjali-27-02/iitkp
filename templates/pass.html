@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel= "stylesheet" href="/static/style2.css">
+    <title>Pass HTML</title>
+</head>
+<body>
+  <div id="content">
+  <div class="wrapper">
+    {% for image in image_files %}
+        <div class='image-container'>
+          
+          <img src="/static/images/{{value}}/{{image }}" alt="{{ image }}" class="gallery__img"><br/>
+          <button class="delete-button" onclick="deleteImage(this)">X</button>
+          
+        </div>
+        
+    {% endfor %}
+  </div> 
+</div>
+<script>
+  function deleteImage(button) {
+    var container = button.parentNode;
+    container.parentNode.removeChild(container);
+  }
+</script>
+</body>
+</html>
