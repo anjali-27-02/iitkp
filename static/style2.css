@@ -114,15 +114,16 @@
 }
 .correct-button{
     display: none;
+    
 }
 .image-container:hover .correct-button{
     position: absolute;
     top: 25px;
     right: 2px;
-    background-color:white;
+    background-color: black;
     color: white;
     border: none;
-    border-radius: 70%;
+    border-radius: 0;
     width: 25px;
     height: 25px;
     font-size: 16px;
@@ -183,3 +184,71 @@
   .gallery img {
     pointer-events: none;
   }
+  /* .correct-button[title] {
+    position: relative;
+  }
+  
+  .correct-button[title]::after {
+    content: attr(title);
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .correct-button[title]:hover::after {
+    visibility: visible;
+    opacity: 1;
+  } */
+  /* .delete-button[title] {
+    position: relative;
+  }
+  
+  .delete-button[title]::after {
+    content: attr(title);
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    margin-top: 0px;
+  }
+  
+  .delete-button[title]:hover::after {
+    visibility: visible;
+    opacity: 1;
+  }
+  .image-checkbox[title] {
+    position: relative;
+  }
+  
+  .image-checkbox[title]::after {
+    content: attr(title);
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    margin: 40px;
+    font-size: 14px;
+    border-radius: 4px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .image-checkbox[title]:hover::after {
+    visibility: visible;
+    opacity: 1;
+  } */
