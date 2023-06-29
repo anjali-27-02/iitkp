@@ -9,20 +9,48 @@
   <div class="wrapper">
     {% for image in image_files %}
         <div class='image-container'>
-          
+          <div class="gallery">
           <img src="/static/images/{{value}}/{{image }}" alt="{{ image }}" class="gallery__img"><br/>
+          <input type="checkbox" class="image-checkbox">
           <button class="delete-button" onclick="deleteImage(this)">X</button>
-          
+          <button class="correct-button" onclick="validate(this)"><img src="/static/finalcheck.png"/></button>
+        </div>
         </div>
         
     {% endfor %}
   </div> 
+  <button id="delete-selected-button" onclick="deleteSelectedImages()">Delete Selected Images</button>
 </div>
 <script>
   function deleteImage(button) {
     var container = button.parentNode;
     container.parentNode.removeChild(container);
   }
+  function deleteSelectedImages() {
+    var checkboxes = document.getElementsByClassName("image-checkbox");
+    var selectedImages = [];
+
+    for (var i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked) {
+        var container = checkboxes[i].parentNode;
+        selectedImages.push(container);
+      }
+    }
+
+    for (var i = 0; i < selectedImages.length; i++) {
+      selectedImages[i].parentNode.removeChild(selectedImages[i]);
+    }
+  }
+  function validate(button) {
+    var imageContainer = button.parentNode;
+      var tickImg = document.createElement('img');
+      tickImg.src = '/static/correct.png';
+      tickImg.alt = 'Tick';
+      tickImg.className = 'tick';
+      imageContainer.appendChild(tickImg);
+    }
+
+  
 </script>
 </body>
 </html>
