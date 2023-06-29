@@ -12,8 +12,9 @@ def index():
 @app.route('/',methods=['POST'])
 def getvalue():
     value=request.form['q']
+    number=int(request.form['n'])
     google_crawler = GoogleImageCrawler(storage={'root_dir': 'static/images/'+value})
-    google_crawler.crawl(keyword=value, max_num=20)
+    google_crawler.crawl(keyword=value, max_num=number)
     image_files = os.listdir('static/images/'+value)
     return render_template('pass.html',image_files=image_files,value=value)
 
