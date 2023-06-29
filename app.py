@@ -16,7 +16,7 @@ def getvalue():
     google_crawler = GoogleImageCrawler(storage={'root_dir': 'static/images/'+value})
     google_crawler.crawl(keyword=value, max_num=number)
     image_files = os.listdir('static/images/'+value)
-    return render_template('pass.html',image_files=image_files,value=value)
+    return render_template('pass2.html',image_files=image_files,value=value)
 
 
 if __name__=='__main__':

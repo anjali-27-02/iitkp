@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/static/style2.css">
+  <title>Pass HTML</title>
+</head>
+<body>
+  <div id="content">
+    <div class="wrapper">
+      
+      {% for image in image_files %}
+        <div class='image-container'>
+          
+          <img src="/static/images/{{ value }}/{{ image }}" alt="{{ image }}" class="gallery__img"><br/>
+          
+          <button class="delete-button" onclick="deleteImage(this)">X</button>
+          <input type="checkbox" class="image-checkbox">
+        
+        </div>
+      {% endfor %}
+
+    </div> 
+    <button id="delete-selected-button" onclick="deleteSelectedImages()">Delete Selected Images</button>
+  </div>
+<script>
+  function deleteImage(button) {
+    var container = button.parentNode;
+    container.parentNode.removeChild(container);
+  }
+
+  
+    function deleteSelectedImages() {
+    var checkboxes = document.getElementsByClassName("image-checkbox");
+    var selectedImages = [];
+
+    for (var i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked) {
+        var container = checkboxes[i].parentNode;
+        selectedImages.push(container);
+      }
+    }
+
+    for (var i = 0; i < selectedImages.length; i++) {
+      selectedImages[i].parentNode.removeChild(selectedImages[i]);
+    }
+  }
+  
+</script>
+
+</body>
+</html>

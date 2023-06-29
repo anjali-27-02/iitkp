@@ -1,0 +1,23 @@
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-container .image {
+    position: relative;
+    margin: 5px;
+}
+
+.image-container .image.selected {
+    border: 2px solid red;
+}
+.delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
