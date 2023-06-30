@@ -11,7 +11,7 @@
         <div class='image-container'>
           <div class="gallery">
           <img src="/static/images/{{value}}/{{image }}" alt="{{ image }}" class="gallery__img"><br/>
-          <input type="checkbox" class="image-checkbox" title="Click to select" onclick="toggleDeleteButton()">
+          <input type="checkbox" class="image-checkbox" title="Click to select" onclick="toggleDeleteButton(); toggleValidateButton();">
           <button class="delete-button" onclick="deleteImage(this)" title="Click to delete">X</button>
           <button class="correct-button" onclick="validate(this)" title="Click to validate"><img src="/static/finalcheck.png"/></button>
         </div>
@@ -21,7 +21,8 @@
   </div> 
   
   <button id="delete-selected-button" onclick="deleteSelectedImages()" style="display: none">Delete Selected Images</button>
-  <p id="selected-count" style="color: black; display: none;background-color: peachpuff;">0 images selected</p>
+  <button id="validate-all-button" onclick="validateAllImages()" style="display: none">Validate All Images</button>
+  <p id="selected-count" style="color: black;background-color: plum; display: none">0 images selected</p>
 
 </div>
 <script>
@@ -29,32 +30,38 @@
     var container = button.parentNode;
     container.parentNode.removeChild(container);
   }
+  
   function deleteSelectedImages() {
-      var checkboxes = document.getElementsByClassName("image-checkbox");
-      var selectedImages = [];
+  var checkboxes = document.getElementsByClassName("image-checkbox");
+  var selectedImages = [];
 
-      for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-          var container = checkboxes[i].parentNode;
-          selectedImages.push(container);
-        }
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+      var container = checkboxes[i].parentNode;
+      // Exclude the validated images from the selected images array
+      if (!container.querySelector(".tick")) {
+        selectedImages.push(container);
       }
-
-      for (var i = 0; i < selectedImages.length; i++) {
-        selectedImages[i].parentNode.removeChild(selectedImages[i]);
-      }
-
-      toggleDeleteButton(); 
     }
+  }
+
+  for (var i = 0; i < selectedImages.length; i++) {
+    selectedImages[i].parentNode.removeChild(selectedImages[i]);
+  }
+
+  toggleDeleteButton();
+  toggleValidateButton();
+}
 
   function validate(button) {
-    var imageContainer = button.parentNode;
+      var imageContainer = button.parentNode;
       var tickImg = document.createElement('img');
       tickImg.src = '/static/correct.png';
       tickImg.alt = 'Tick';
       tickImg.className = 'tick';
       imageContainer.appendChild(tickImg);
     }
+
     function toggleDeleteButton() {
       var checkboxes = document.getElementsByClassName("image-checkbox");
       var deleteButton = document.getElementById("delete-selected-button");
@@ -65,7 +72,6 @@
           selectedCount++;
         }
       }
-
       var selectedCountText = selectedCount === 1 ? "1 image selected" : selectedCount + " images selected";
       var selectedCountElement = document.getElementById("selected-count");
       selectedCountElement.textContent = selectedCountText;
@@ -78,7 +84,37 @@
         selectedCountElement.style.display = "none"; 
       }
     }
-  
+    function toggleValidateButton() {
+  var checkboxes = document.getElementsByClassName("image-checkbox");
+  var validateButton = document.getElementById("validate-all-button");
+  var isChecked = false;
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+      isChecked = true;
+      break;
+    }
+  }
+
+  if (isChecked) {
+    validateButton.style.display = "block";
+  } else {
+    validateButton.style.display = "none";
+  }
+}
+function validateAllImages() {
+  var checkboxes = document.getElementsByClassName("image-checkbox");
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+      var container = checkboxes[i].parentNode;
+      var validateButton = container.querySelector(".correct-button");
+      validate(validateButton);
+    }
+  }
+}
+
+
 </script>
 </body>
 </html>
