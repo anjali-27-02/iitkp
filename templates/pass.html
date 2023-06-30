@@ -11,7 +11,7 @@
         <div class='image-container'>
           <div class="gallery">
           <img src="/static/images/{{value}}/{{image }}" alt="{{ image }}" class="gallery__img"><br/>
-          <input type="checkbox" class="image-checkbox" title="Click to select">
+          <input type="checkbox" class="image-checkbox" title="Click to select" onclick="toggleDeleteButton()">
           <button class="delete-button" onclick="deleteImage(this)" title="Click to delete">X</button>
           <button class="correct-button" onclick="validate(this)" title="Click to validate"><img src="/static/finalcheck.png"/></button>
         </div>
@@ -19,7 +19,10 @@
         
     {% endfor %}
   </div> 
-  <button id="delete-selected-button" onclick="deleteSelectedImages()">Delete Selected Images</button>
+  
+  <button id="delete-selected-button" onclick="deleteSelectedImages()" style="display: none">Delete Selected Images</button>
+  <p id="selected-count" style="color: black; display: none;background-color: peachpuff;">0 images selected</p>
+
 </div>
 <script>
   function deleteImage(button) {
@@ -27,20 +30,23 @@
     container.parentNode.removeChild(container);
   }
   function deleteSelectedImages() {
-    var checkboxes = document.getElementsByClassName("image-checkbox");
-    var selectedImages = [];
+      var checkboxes = document.getElementsByClassName("image-checkbox");
+      var selectedImages = [];
 
-    for (var i = 0; i < checkboxes.length; i++) {
-      if (checkboxes[i].checked) {
-        var container = checkboxes[i].parentNode;
-        selectedImages.push(container);
+      for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          var container = checkboxes[i].parentNode;
+          selectedImages.push(container);
+        }
       }
+
+      for (var i = 0; i < selectedImages.length; i++) {
+        selectedImages[i].parentNode.removeChild(selectedImages[i]);
+      }
+
+      toggleDeleteButton(); 
     }
 
-    for (var i = 0; i < selectedImages.length; i++) {
-      selectedImages[i].parentNode.removeChild(selectedImages[i]);
-    }
-  }
   function validate(button) {
     var imageContainer = button.parentNode;
       var tickImg = document.createElement('img');
@@ -49,7 +55,29 @@
       tickImg.className = 'tick';
       imageContainer.appendChild(tickImg);
     }
+    function toggleDeleteButton() {
+      var checkboxes = document.getElementsByClassName("image-checkbox");
+      var deleteButton = document.getElementById("delete-selected-button");
+      var selectedCount = 0;
 
+      for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          selectedCount++;
+        }
+      }
+
+      var selectedCountText = selectedCount === 1 ? "1 image selected" : selectedCount + " images selected";
+      var selectedCountElement = document.getElementById("selected-count");
+      selectedCountElement.textContent = selectedCountText;
+
+      if (selectedCount > 0) {
+        deleteButton.style.display = "block"; 
+        selectedCountElement.style.display = "block"; 
+      } else {
+        deleteButton.style.display = "none"; 
+        selectedCountElement.style.display = "none"; 
+      }
+    }
   
 </script>
 </body>
